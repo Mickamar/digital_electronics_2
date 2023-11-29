@@ -21,9 +21,9 @@ int main() {
 
         if (war > 700) {
             printf("LED svítí\n");
-            GPIO_write_high(&PORTB, LAMP);
-        } else {
-            GPIO_write_low(&PORTB, LAMP);
+            //GPIO_write_high(&PORTB, LAMP);
+        //} else {
+           // GPIO_write_low(&PORTB, LAMP);
         }
         
         _delay_ms(1000);
