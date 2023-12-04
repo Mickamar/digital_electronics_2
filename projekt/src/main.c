@@ -6,7 +6,7 @@
 #include "twi.h"
 #include <stdlib.h> 
 #include "timer.h"
-#include <avr/io.h>         // AVR device-specific IO definitions
+#include <avr/io.h>         
 #include <avr/interrupt.h>
 
 
@@ -28,7 +28,7 @@ int main() {
     TIM1_OVF_1SEC
     TIM1_OVF_ENABLE
     sei();
-    //uart_puts("---- Test fotorezistoru ----\n");
+    
 
     GPIO_mode_output(&DDRB, LAMP);
 
@@ -37,6 +37,8 @@ int main() {
     while (1) {
         int war = GPIO_read(&PINC, SENZOR_PIN);
         itoa(war, buffer,10);
+        
+        
         uart_puts(buffer);
         uart_puts("\n");
         rtc_read_hours(&hours);
