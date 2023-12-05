@@ -33,7 +33,7 @@ int main() {
     GPIO_mode_output(&DDRB, LAMP);
 
     rtc_init();
-    rtc_write_seconds(0); // nastavení času
+    rtc_write_seconds(0); 
     rtc_write_minutes(10); 
     rtc_write_hours(13);
 
@@ -46,7 +46,7 @@ int main() {
         uart_puts("\n");
         rtc_read_hours(&hours);
         rtc_read_minutes(&minutes);
-        rtc_read_seconds(&seconds);
+        //rtc_read_seconds(&seconds);
 
 
         itoa(hours,time_string,10);
@@ -55,22 +55,37 @@ int main() {
         itoa(minutes,time_string,10);
         uart_puts(time_string);
         uart_puts(":");
-        itoa(seconds,time_string,10);
-        uart_puts(time_string);
-        uart_puts("\n");
+        //itoa(seconds,time_string,10);
+        //uart_puts(time_string);
+        //uart_puts("\n");
         
         
-
-        if (war == 0) { //no light, diod shine
-            uart_puts("LED svítí\n");
-            GPIO_write_high(&PORTB, LAMP);
+        if ((hours >= 18 && hours <= 23) || (hours >= 0 && hours < 7) || war == 0) {
+            uart_puts("Zapínání lampy mezi 18:00 a 7:00 nebo při war == 0\n");
+            GPIO_write_high(&PORTB, LAMP); // Zapnutí lampy
         } else {
             uart_puts("LED nesvítí\n");
-            GPIO_write_low(&PORTB, LAMP);
-        }
-        
-        _delay_ms(1000);
+            GPIO_write_low(&PORTB, LAMP); // Vypnutí lampy
     }
+
+        //if (war == 0) { //no light, diod shine
+          //  uart_puts("LED svítí\n");
+            //GPIO_write_high(&PORTB, LAMP);
+        //} else {
+          //  uart_puts("LED nesvítí\n");
+            //GPIO_write_low(&PORTB, LAMP);
+        //}
+        
+        //_delay_ms(1000);
+    //}
+        // Kontrola času pro zapnutí lampy od 18:00:00 do 06:59:59
+      //  if ((hours >= 18 && hours <= 23) || (hours >= 0 && hours < 7)) {
+       //     uart_puts("Zapínání lampy mezi 18:00 a 7:00\n");
+        //    GPIO_write_high(&PORTB, LAMP); // Zapnutí lampy
+        //} else {
+          //  uart_puts("LED nesvítí\n");
+            //GPIO_write_low(&PORTB, LAMP); // Vypnutí lampy
+     //}
 
     return 0;
 }
